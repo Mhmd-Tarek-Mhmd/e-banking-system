@@ -2,10 +2,13 @@ import React from "react";
 import logo from "../logo.svg";
 import { Counter } from "../features/counter/Counter";
 import "./App.css";
+import Landingpage from "../pages/Landingpage";
+import Footer from '../layouts/Footer'
 
 function App() {
   return (
     <div className="App">
+    <Landingpage/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
@@ -51,6 +54,7 @@ function App() {
           </a>
         </span>
       </header>
+      <Footer/>
     </div>
   );
 }
