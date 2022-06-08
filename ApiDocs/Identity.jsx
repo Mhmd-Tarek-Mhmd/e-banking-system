@@ -127,6 +127,7 @@ export default function Identity() {
           type="password"
           name="password"
           placeholder="password"
+          minLength={8}
           required
         />
         <label htmlFor="rememberMe">Remember Me</label>
