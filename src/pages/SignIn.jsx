@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import signIn from "./signIn.module.scss";
+import identity from "./identity.module.scss";
 import { request } from "../utilities/request";
 
 export default function SignIn() {
@@ -9,11 +9,11 @@ export default function SignIn() {
   }
 
   return (
-    <div className={signIn.sign}>
-      <div className={signIn.form}>
-        <form className={signIn.formBody} onSubmit={login}>
+    <div className={identity.sign}>
+      <div className={identity.form}>
+        <form className={identity.formBody} onSubmit={login}>
           <h1> Maze ID</h1>
-          <div className={signIn.input}>
+          <div className={identity.input}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -29,24 +29,24 @@ export default function SignIn() {
               minLength={8}
               required
             />
-            <div className={signIn.flexHorizontal}>
+            <div className={identity.flexHorizontal}>
               <input type="checkbox" name="rememberMe" />
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <NavLink className={signIn.forgotPass} to="/forgotPassword">
+            <NavLink className={identity.forgotPass} to="/forgotPassword">
               Forgot Password?
             </NavLink>
           </div>
-          <div className={signIn.flex}>
+          <div className={identity.flex}>
             <button
               style={{ marginBottom: 10, marginTop: 20 }}
-              className={signIn.btnSign}
+              className={identity.btnSign}
               type="submit"
             >
               LOG IN
             </button>
-            <NavLink className={signIn.newAccount} to="/signUp">
+            <NavLink className={identity.newAccount} to="/signUp">
               Create New Account?
             </NavLink>
           </div>
