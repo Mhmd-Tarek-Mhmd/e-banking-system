@@ -1,11 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import identity from "./identity.module.scss";
-import { request } from "../utilities/request";
+import { ajax } from "../utilities/ajax";
 
 export default function SignIn() {
   function login(e) {
-    request.post("identity/login", e);
+    e.preventDefault();
+
+    ajax.post("identity/login", new FormData(e.currentTarget)).then((res) => {
+      if (res.errors) console.error(res.errors);
+    });
   }
 
   return (

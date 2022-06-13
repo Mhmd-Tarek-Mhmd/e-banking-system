@@ -102,7 +102,8 @@ export default function Identity() {
       <h1>Identity</h1>
       <h2>Register new user</h2>
       <form onSubmit={register}>
-        <input type="text" name="name" placeholder="Name" required />
+        <input type="text" name="firstName" placeholder="First Name" required />
+        <input type="text" name="lastName" placeholder="Last Name" required />
         <input type="email" name="email" placeholder="email" required />
         <input
           type="password"
