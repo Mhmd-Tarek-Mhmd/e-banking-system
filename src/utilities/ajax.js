@@ -1,15 +1,14 @@
 export const ajax = {
-  get: function get(endPoint, body) {
-    fetch(`https://ebankingsystem.herokuapp.com/api/${endPoint}`, {
+  get: function get(endPoint) {
+    return fetch(`https://localhost:7035/api/${endPoint}`, {
       method: "GET",
       headers: {
         mode: "cors",
       },
-      body: body,
     });
   },
   post: function post(endPoint, body, addJWT) {
-    return fetch(`https://ebankingsystem.herokuapp.com/api/${endPoint}`, {
+    return fetch(`https://localhost:7035/api/${endPoint}`, {
       method: "POST",
       headers: {
         mode: "cors",

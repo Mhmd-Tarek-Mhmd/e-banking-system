@@ -1,19 +1,37 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import signIn from "./signin.module.scss";
-import { request } from "../utilities/request";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import identity from "./identity.module.scss";
+import { ajax } from "../utilities/ajax";
+import { cookies } from "../utilities/cookies";
 
 export default function SignIn() {
+  const [errorMessage, setErrorMessage] = useState([""]);
+  const navigateTo = useNavigate();
+
   function login(e) {
-    request.post("identity/login", e);
+    e.preventDefault();
+
+    ajax
+      .post("identity/login", new FormData(e.currentTarget))
+      .then((response) => {
+        if (response.ok) {
+          setErrorMessage([""]);
+          response.json().then((data) => {
+            cookies.add("j", data.j, data.rememberMe ? 7 : null);
+            cookies.add("r", data.r, data.rememberMe ? 7 : null);
+
+            navigateTo(data.r === "a" ? "/adminPanel" : "/");
+          });
+        } else response.json().then((errors) => setErrorMessage(errors));
+      });
   }
 
   return (
-    <div className={signIn.sign}>
-      <div className={signIn.form}>
-        <form className={signIn.formBody} onSubmit={login}>
+    <div className={identity.sign}>
+      <div className={identity.form}>
+        <form className={identity.formBody} onSubmit={login}>
           <h1> Maze ID</h1>
-          <div className={signIn.input}>
+          <div className={identity.input}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -29,24 +47,30 @@ export default function SignIn() {
               minLength={8}
               required
             />
-            <div className={signIn.flexHorizontal}>
+            <div className={identity.flexHorizontal}>
               <input type="checkbox" name="rememberMe" />
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <NavLink className={signIn.forgotPass} to="/forgotPassword">
+            <div className={identity.errorMessage}>
+              {errorMessage.map((error, index) => (
+                <div key={index}>{error}</div>
+              ))}
+            </div>
+
+            {/* <NavLink className={identity.forgotPass} to="/forgotPassword">
               Forgot Password?
-            </NavLink>
+            </NavLink> */}
           </div>
-          <div className={signIn.flex}>
+          <div className={identity.flex}>
             <button
               style={{ marginBottom: 10, marginTop: 20 }}
-              className={signIn.btnSign}
+              className={identity.btnSign}
               type="submit"
             >
               LOG IN
             </button>
-            <NavLink className={signIn.newAccount} to="/signUp">
+            <NavLink className={identity.newAccount} to="/signUp">
               Create New Account?
             </NavLink>
           </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import identity from "./identity.module.scss";
 import { ajax } from "../utilities/ajax";
-import { NavLink } from "react-router-dom";
+import { cookies } from "../utilities/cookies";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -13,7 +14,9 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState([""]);
   //   console.log(firstName, lastName, Email, Phone, Password);
 
-  function reg(firstName, lastName, Email, Phone, Password, e) {
+  const navigateTo = useNavigate();
+
+  function reg(e) {
     e.preventDefault();
 
     if (confirmPassword !== Password) {
@@ -29,8 +32,15 @@ function Register() {
     formdata.append("Password", Password);
 
     ajax.post("identity/register", formdata).then((response) => {
-      if (response.ok) setErrorMessage([""]);
-      else return response.json().then((errors) => setErrorMessage(errors));
+      if (response.ok) {
+        setErrorMessage([""]);
+        response.json().then((data) => {
+          cookies.add("j", data.j, data.rememberMe ? 7 : null);
+          cookies.add("r", data.r, data.rememberMe ? 7 : null);
+
+          navigateTo("/");
+        });
+      } else return response.json().then((errors) => setErrorMessage(errors));
     });
   }
 
@@ -38,12 +48,7 @@ function Register() {
     <>
       <div className={identity.sign}>
         <main className={identity.form}>
-          <form
-            onSubmit={(e) =>
-              reg(firstName, lastName, Email, Phone, Password, e)
-            }
-            className={identity.formBody}
-          >
+          <form onSubmit={(e) => reg(e)} className={identity.formBody}>
             <h1>Registration</h1>
             <div className={identity.input}>
               <div className={identity.inputItems}>
