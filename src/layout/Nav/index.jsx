@@ -21,7 +21,7 @@ function Nav() {
           MaZe Bank
         </a>
         <div className={Navs.flex}>
-          {cookies.get("j") ? (
+          {cookies.get('j', true) ? (
             <a href style={{ cursor: "pointer" }} onClick={signOut}>
               Sign Out
             </a>

@@ -1,46 +1,106 @@
-import React,{useState} from 'react'
-import { Search,Feed, Icon} from 'semantic-ui-react'
+import React, { useState, useEffect } from "react";
+import { Search, Feed, Icon } from "semantic-ui-react";
+import { ajax } from "../../utilities/ajax";
 
-function Transaction(){
-const image = 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg'
-const image2 = 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg'
-const date = '3 days ago'
+function Transaction() {
+  const image = "https://react.semantic-ui.com/images/avatar/small/jenny.jpg";
+  const image2 = "https://react.semantic-ui.com/images/avatar/small/elliot.jpg";
 
+  const [transactions, setTransactions] = useState([]);
+  let sourceTransactions = [];
 
-return(
-    <div style={{marginTop:'100px'}}>
-        <Search
-          placeholder='Enter Transaction Id'
-          style={{marginLeft:'50px'}}
-          size='massive'
-        />
+  useEffect(() => {
+    ajax.get("admin/getCompleteTransactionLog", true).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          setTransactions(data);
+          sourceTransactions = data;
+        });
+    });
+  }, []);
 
-<Feed style={{border:'solid 1px black',width:'80%',marginTop:'40px',marginLeft:'40px',borderRadius:'10px',padding:'10px'}}>
-    <h3>Transaction id 3</h3>
-    <Feed.Event image={image} date={date} summary='user1 sent to user2 100$' />
+  function searchTransactions(e) {
+    if (e.target.value !== "")
+      setTransactions(transactions.filter((t) => t.id === e.target.value));
+    else setTransactions(sourceTransactions);
+  }
 
-    <Feed.Event>
-      <Feed.Label image={image2} />
-      <Feed.Content date={date} summary='user2 receive from user1 100$' />
-    </Feed.Event>
-    <Icon name='exchange' style={{float:'right',marginTop:'-30px'}} size='big' color='blue'/>
-  </Feed>
+  return (
+    <div style={{ marginTop: "100px" }}>
+      {transactions.length === 0 ? (
+        <Feed
+          style={{
+            border: "solid 1px black",
+            width: "80%",
+            marginTop: "40px",
+            marginLeft: "40px",
+            borderRadius: "10px",
+            padding: "10px",
+          }}
+        >
+          No transactions are done so far
+        </Feed>
+      ) : (
+        <>
+          <Search
+            placeholder="Enter Transaction Id"
+            style={{ marginLeft: "50px" }}
+            size="massive"
+            onBlur={searchTransactions}
+          />
 
-  <Feed style={{border:'solid 1px black',width:'80%',marginTop:'40px',marginLeft:'40px',borderRadius:'10px',padding:'10px'}}>
-    <h3>Transaction id 2</h3>
-    <Feed.Event image={image} date={date} summary='user1 charge 100$' />
-
-    <Icon name='arrow right' style={{float:'right',marginTop:'-30px'}} size='big'  color='green'/>
-  </Feed>
-
-  <Feed style={{border:'solid 1px black',width:'80%',marginTop:'40px',marginLeft:'40px',borderRadius:'10px',padding:'10px'}}>
-    <h3>Transaction id 1</h3>
-    <Feed.Event image={image} date={date} summary='user1 withdraw 100$' />
-
-    <Icon name='arrow left' style={{float:'right',marginTop:'-30px'}} size='big' color='red'/>
-  </Feed>
+          {transactions.map((transaction) => (
+            <Feed
+              key={transaction.id}
+              style={{
+                border: "solid 1px black",
+                width: "80%",
+                marginTop: "40px",
+                marginLeft: "40px",
+                borderRadius: "10px",
+                padding: "10px",
+              }}
+            >
+              <h3>Transaction ID: {transaction.id}</h3>
+              <Feed.Event
+                image={image}
+                date={new Date(transaction.date).toLocaleDateString()}
+                summary={
+                  transaction.type === "transfer"
+                    ? `${transaction.transactor} sent ${transaction.amount}$ to ${transaction.transferredTo}`
+                    : transaction.type === "withdraw"
+                    ? `${transaction.transactor} withdrew ${transaction.amount}$`
+                    : `${transaction.transactor} deposited ${transaction.amount}$`
+                }
+              />
+              {transaction.type === "transfer" ? (
+                <Icon
+                  name="exchange"
+                  style={{ float: "right", marginTop: "-30px" }}
+                  size="big"
+                  color="blue"
+                />
+              ) : transaction.type === "deposit" ? (
+                <Icon
+                  name="arrow right"
+                  style={{ float: "right", marginTop: "-30px" }}
+                  size="big"
+                  color="green"
+                />
+              ) : (
+                <Icon
+                  name="arrow left"
+                  style={{ float: "right", marginTop: "-30px" }}
+                  size="big"
+                  color="red"
+                />
+              )}
+            </Feed>
+          ))}
+        </>
+      )}
     </div>
-)
+  );
 }
 
-export default Transaction
+export default Transaction;
