@@ -1,17 +1,16 @@
 import React from "react";
 import Navs from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { cookies } from "../../utilities/cookies";
 import { ajax } from "../../utilities/ajax";
+import { cookies } from "../../utilities/cookies";
 
 function Nav() {
   const navigateTo = useNavigate();
 
   function signOut() {
-    ajax.get("identity/logOut").then((response) => {
-      cookies.remove(["j", "r"]);
-      navigateTo("/");
-    });
+    ajax.get("identity/logOut");
+    cookies.remove(["j", "r"]);
+    navigateTo("/");
   }
 
   return (
@@ -21,7 +20,7 @@ function Nav() {
           MaZe Bank
         </a>
         <div className={Navs.flex}>
-          {cookies.get('j', true) ? (
+          {cookies.get("j", true) ? (
             <a href style={{ cursor: "pointer" }} onClick={signOut}>
               Sign Out
             </a>

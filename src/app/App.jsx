@@ -7,6 +7,7 @@ import Layout from "../layout";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
 import AdminPanel from "../pages/AdminPanel";
+import { cookies } from "../utilities/cookies";
 
 function App() {
   return (
@@ -15,7 +16,14 @@ function App() {
         <Route path="/" element={<Landingpage />} />
         <Route path="register" element={<Register />} />
         <Route path="signIn" element={<SignIn />} />
-        <Route path="adminPanel" element={<AdminPanel />} />
+        <Route
+          path="adminPanel"
+          element={cookies.get("r") === "a" ? <AdminPanel /> : <Landingpage />}
+        />
+        <Route
+          path="customerPanel"
+          element={cookies.get("r") === "c" ? <Landingpage /> : <Landingpage />}
+        />
       </Route>
     </Routes>
   );

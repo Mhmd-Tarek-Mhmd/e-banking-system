@@ -31,17 +31,17 @@ function Register() {
     formdata.append("Phone", Phone);
     formdata.append("Password", Password);
 
-    ajax.post("identity/register", formdata).then((response) => {
-      if (response.ok) {
+    ajax
+      .post("identity/register", "form", formdata)
+      .then((res) => {
         setErrorMessage([""]);
-        response.json().then((data) => {
-          cookies.add("j", data.j, data.rememberMe ? 7 : null);
-          cookies.add("r", data.r, data.rememberMe ? 7 : null);
 
-          navigateTo("/");
-        });
-      } else return response.json().then((errors) => setErrorMessage(errors));
-    });
+        cookies.add("j", res.data.j, res.data.rememberMe ? 7 : null);
+        cookies.add("r", res.data.r, res.data.rememberMe ? 7 : null);
+
+        navigateTo("/");
+      })
+      .catch((errors) => setErrorMessage(errors));
   }
 
   return (

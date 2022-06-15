@@ -4,18 +4,16 @@ import { ajax } from "../../utilities/ajax";
 
 function Transaction() {
   const image = "https://react.semantic-ui.com/images/avatar/small/jenny.jpg";
-  const image2 = "https://react.semantic-ui.com/images/avatar/small/elliot.jpg";
 
   const [transactions, setTransactions] = useState([]);
-  let sourceTransactions = [];
+  const [sourceTransactions, setSourceTransactions] = useState([]);
+  const [didMount, setDidMount] = useState(false);
 
   useEffect(() => {
-    ajax.get("admin/getCompleteTransactionLog", true).then((response) => {
-      if (response.ok)
-        response.json().then((data) => {
-          setTransactions(data);
-          sourceTransactions = data;
-        });
+    ajax.get("admin/getCompleteTransactionLog", true).then((data) => {
+      setTransactions(data);
+      setSourceTransactions(data);
+      setDidMount(true);
     });
   }, []);
 
@@ -27,7 +25,7 @@ function Transaction() {
 
   return (
     <div style={{ marginTop: "100px" }}>
-      {transactions.length === 0 ? (
+      {transactions.length === 0 && didMount ? (
         <Feed
           style={{
             border: "solid 1px black",
@@ -40,7 +38,7 @@ function Transaction() {
         >
           No transactions are done so far
         </Feed>
-      ) : (
+      ) : transactions.length > 0 ? (
         <>
           <Search
             placeholder="Enter Transaction Id"
@@ -98,6 +96,8 @@ function Transaction() {
             </Feed>
           ))}
         </>
+      ) : (
+        <div></div>
       )}
     </div>
   );

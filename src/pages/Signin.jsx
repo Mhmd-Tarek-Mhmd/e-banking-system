@@ -10,19 +10,18 @@ export default function SignIn() {
 
   function login(e) {
     e.preventDefault();
-
     ajax
-      .post("identity/login", new FormData(e.currentTarget))
-      .then((response) => {
-        if (response.ok) {
-          setErrorMessage([""]);
-          response.json().then((data) => {
-            cookies.add("j", data.j, data.rememberMe ? 7 : null);
-            cookies.add("r", data.r, data.rememberMe ? 7 : null);
+      .post("identity/login", "form", new FormData(e.currentTarget))
+      .then((res) => {
+        setErrorMessage([""]);
+        cookies.add("j", res.j, res.rememberMe ? 7 : null);
+        cookies.add("r", res.r, res.rememberMe ? 7 : null);
 
-            navigateTo(data.r === "a" ? "/adminPanel" : "/");
-          });
-        } else response.json().then((errors) => setErrorMessage(errors));
+        navigateTo(res.r === "a" ? "/adminPanel" : "/");
+      })
+      .catch((res) => {
+        console.log(res);
+        setErrorMessage(res);
       });
   }
 
