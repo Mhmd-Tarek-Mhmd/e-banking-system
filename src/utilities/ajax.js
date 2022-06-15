@@ -10,7 +10,7 @@ export const ajax = {
           document.cookie.split("j=")[1].split(";")[0]
         }`;
 
-      fetch(`https://localhost:7035/api/${endPoint}`, {
+      fetch(`https://ebankingsystem.herokuapp.com/api/${endPoint}`, {
         method: "GET",
         headers: headers,
       }).then((response) => {
@@ -38,7 +38,7 @@ export const ajax = {
           document.cookie.split("j=")[1].split(";")[0]
         }`;
 
-      fetch(`https://localhost:7035/api/${endPoint}`, {
+      fetch(`https://ebankingsystem.herokuapp.com/api/${endPoint}`, {
         method: "POST",
         headers: headers,
         body: body,
