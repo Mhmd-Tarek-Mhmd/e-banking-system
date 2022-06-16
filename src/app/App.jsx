@@ -4,9 +4,10 @@ import { Routes, Route } from "react-router-dom";
 
 import Landingpage from "../pages/Landingpage";
 import Layout from "../layout";
-import SignIn from "../pages/SignIn";
+import SignIn from "../pages/Signin";
 import Register from "../pages/Register";
 import AdminPanel from "../pages/AdminPanel";
+import UserDashboard from "../pages/UserDashboard";
 import { cookies } from "../utilities/cookies";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Landingpage />} />
         <Route path="register" element={<Register />} />
         <Route path="signIn" element={<SignIn />} />
+        <Route path='/dashboard/:id' element={<UserDashboard/>}/>
         <Route
           path="adminPanel"
           element={cookies.get("r") === "a" ? <AdminPanel /> : <Landingpage />}
