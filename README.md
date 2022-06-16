@@ -6,6 +6,8 @@ You can check [the deployed app](https://ebankingsystem.herokuapp.com/)
 or you can follow the below steps to run it locally
 
 (In both you can use the following account for admin access:
+
+
 mail: admin@ebanking.com
 password: @dmiN!23
 )
