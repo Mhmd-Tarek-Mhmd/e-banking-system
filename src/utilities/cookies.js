@@ -13,7 +13,7 @@ export const cookies = {
   get: function get(key) {
     if (document.cookie)
       return `${document.cookie.split(`${key}=`)[1].split(";")[0]}`;
-    else return null;
+    else return "";
   },
   remove: function remove(keys) {
     keys.forEach((key) => {

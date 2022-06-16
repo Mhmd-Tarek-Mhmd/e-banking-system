@@ -4,10 +4,10 @@ import { Routes, Route } from "react-router-dom";
 
 import Landingpage from "../pages/Landingpage";
 import Layout from "../layout";
-import SignIn from "../pages/Signin";
-import Register from "../pages/Register";
-import AdminPanel from "../pages/AdminPanel";
-import UserDashboard from "../pages/UserDashboard";
+import SignIn from "../pages/identity/SignIn";
+import Register from "../pages/identity/Register";
+import AdminPanel from "../pages/adminPanel";
+import UserDashboard from "../pages/customerDashboard";
 import { cookies } from "../utilities/cookies";
 
 function App() {
@@ -17,15 +17,8 @@ function App() {
         <Route path="/" element={<Landingpage />} />
         <Route path="register" element={<Register />} />
         <Route path="signIn" element={<SignIn />} />
-        <Route path='/dashboard/:id' element={<UserDashboard/>}/>
-        <Route
-          path="adminPanel"
-          element={cookies.get("r") === "a" ? <AdminPanel /> : <Landingpage />}
-        />
-        <Route
-          path="customerPanel"
-          element={cookies.get("r") === "c" ? <Landingpage /> : <Landingpage />}
-        />
+        <Route path="customerDashboard" element={<UserDashboard />} />
+        <Route path="adminPanel" element={<AdminPanel />} />
       </Route>
     </Routes>
   );

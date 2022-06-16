@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import identity from "./identity.module.scss";
-import { ajax } from "../utilities/ajax";
-import { cookies } from "../utilities/cookies";
+import { ajax } from "../../utilities/ajax";
+import { cookies } from "../../utilities/cookies";
 
 export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState([""]);
@@ -17,11 +17,17 @@ export default function SignIn() {
         cookies.add("j", res.j, res.rememberMe ? 7 : null);
         cookies.add("r", res.r, res.rememberMe ? 7 : null);
 
-        navigateTo(res.r === "a" ? "/adminPanel" : "/");
+        navigateTo(
+          res.r === "a"
+            ? "/adminPanel"
+            : res.r === "c"
+            ? "/customerDashboard"
+            : "/"
+        );
       })
       .catch((res) => {
-        console.log(res);
-        setErrorMessage(res);
+        if (typeof res === "string") setErrorMessage([res]);
+        else setErrorMessage(res);
       });
   }
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Menu, Icon } from "semantic-ui-react";
-import Transaction from "./admin component/Transaction";
-import Pending from "./admin component/Pending";
-import Decided from "./admin component/Decided";
+import Transaction from "./Transaction";
+import Pending from "./Pending";
+import Decided from "./Decided";
 import { useNavigate } from "react-router-dom";
-import { ajax } from "../utilities/ajax";
-import { cookies } from "../utilities/cookies";
+import { ajax } from "../../utilities/ajax";
+import { cookies } from "../../utilities/cookies";
 
 export default function AdminPanel() {
   const [activeItem, setActiveItem] = useState("Transaction log");
