@@ -45,25 +45,4 @@ email: string
 status: string
 
 status code 200 if successful
-<<<<<<< HEAD
-<!-- #endregion -->
-=====================================================================
-<!-- #region get Complete Transaction Log -->
-# Get Customer Details
-
-## Response
-{
-    id: string,
-    type: "Withdrawal, Desposit, Transfer" string,
-    amount: number,
-    transactionId: string,
-    transactor: string,
-    transferredTo: string,
-    approved: boolean,
-    date: UTC
-}[]
-
-status code 200 if successful
-=======
->>>>>>> 712b26905732c2bd965509bf404a81e2fdb3362e
 <!-- #endregion -->

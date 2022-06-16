@@ -55,27 +55,6 @@ export default function Admin() {
       else response.json().then((data) => console.log(data.description));
     });
   }
-<<<<<<< HEAD
-  function getCompleteTransactionLog(e) {
-    e.preventDefault();
-
-    fetch("https://ebankingsystem.herokuapp.com/api/admin/getCompleteTransactionLog", {
-      method: "GET",
-      headers: {
-        mode: "cors",
-        authorization: `Bearer ${document.cookie.split("j=")[1].split(";")[0]}`,
-      },
-    }).then((response) => {
-      // Check if the status code == 200
-      if (response.ok) {
-        response.json().then((data) => console.log(data));
-      }
-      // if not, check what is the error
-      else response.json().then((data) => console.log(data.description));
-    });
-  }
-=======
->>>>>>> 712b26905732c2bd965509bf404a81e2fdb3362e
 
   return (
     <>
@@ -106,12 +85,6 @@ export default function Admin() {
 
       <h2>Get Customer Status</h2>
       <button onClick={getCustomerStatus}>Get Customer Status</button>
-<<<<<<< HEAD
-
-      <h2>Get Complete Transaction Log</h2>
-      <button onClick={getCompleteTransactionLog}>Get Complete Transaction Log</button>
-=======
->>>>>>> 712b26905732c2bd965509bf404a81e2fdb3362e
     </>
   );
 }

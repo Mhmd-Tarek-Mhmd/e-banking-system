@@ -45,7 +45,6 @@ email: string
 status: string
 
 status code 200 if successful
-<<<<<<< HEAD
 <!-- #endregion -->
 =====================================================================
 <!-- #region get Complete Transaction Log -->
@@ -64,6 +63,4 @@ status code 200 if successful
 }[]
 
 status code 200 if successful
-=======
->>>>>>> 712b26905732c2bd965509bf404a81e2fdb3362e
 <!-- #endregion -->

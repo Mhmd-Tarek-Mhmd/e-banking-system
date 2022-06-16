@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import logo from "../logo.svg";
 import { Counter } from "../features/counter/Counter";
 import "./App.css";
@@ -9,8 +8,6 @@ import Nav from "../layouts/Nav/Nav";
 import { Route, Routes } from "react-router-dom";
 import Register from "../pages/Register";
 import SignIn from "../pages/Signin";
-import AdminPanal from "../pages/AdminPanal";
-import UserDashboard from "../pages/UserDashboard";
 
 function App() {
   function Ele(){
@@ -74,25 +71,6 @@ function App() {
     <Route path='/' element={<Ele/>}/>
     <Route path='/register' element={<Register/>}/>
     <Route path="/signIn" element={<SignIn/>} />
-    {/*} We should to use admin Id in this url ! {*/}
-    <Route path='/adminpanal/:id' element={<AdminPanal/>}/>
-    <Route path='/dashboard/:id' element={<UserDashboard/>}/>
-=======
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-
-import Landingpage from "../pages/Landingpage";
-import Layout from "../layout";
-import SignIn from "../pages/SignIn";
-
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Landingpage />} />
-        <Route path="signIn" element={<SignIn />} />
-      </Route>
->>>>>>> 712b26905732c2bd965509bf404a81e2fdb3362e
     </Routes>
   );
 }

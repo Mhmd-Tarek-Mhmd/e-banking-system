@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import Navs from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,3 +38,12 @@ function Nav() {
 }
 
 export default Nav;
+=======
+import React from 'react'
+
+export default function Nav() {
+  return (
+    <div>index</div>
+  )
+}
+>>>>>>> 712b26905732c2bd965509bf404a81e2fdb3362e
