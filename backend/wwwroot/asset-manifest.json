@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.209f9fc0.css",
+    "main.js": "/static/js/main.424448ea.js",
+    "static/media/980343_business-wallpaper-35-jpg_4500x3000_h.webp": "/static/media/980343_business-wallpaper-35-jpg_4500x3000_h.d76afeec4f021703cd8f.webp",
+    "index.html": "/index.html",
+    "main.209f9fc0.css.map": "/static/css/main.209f9fc0.css.map",
+    "main.424448ea.js.map": "/static/js/main.424448ea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.209f9fc0.css",
+    "static/js/main.424448ea.js"
+  ]
+}
