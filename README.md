@@ -13,13 +13,11 @@ or you can follow the below steps to run it locally
 - [.NET 6](https://dotnet.microsoft.com/en-us/download),
 - [Postgres Database](https://www.postgresql.org/download/)
 
-3. Register to [SendGrid](https://sendgrid.com/) mail service
-4. Update `appsettings.json` with the following:
-- in `SendGrid` section: your email, password and mail service key
+3. Update `appsettings.json` with the following:
 - in `ConnectionString: Development` section: udate your database username and password
    
-5. Run `dotnet tool install --global dotnet-ef` then `dotnet ef database update`
-7. Run `cd ../backend`
+4. Run `dotnet tool install --global dotnet-ef` then `dotnet ef database update`
+5. Run `cd ../backend`
    then run the application by\
    `dotnet run` or `dotnet watch run` for development purposes
 
