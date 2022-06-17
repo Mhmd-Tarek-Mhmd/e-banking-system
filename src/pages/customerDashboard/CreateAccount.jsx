@@ -26,9 +26,9 @@ export default function CreateAccount({
         setCustomerData({ ...customerData, accounts: updatedAccounts });
         setActive("Home");
       })
-      .catch((res) => {
-        if (typeof res === "string") setErrorMessage([res]);
-        else setErrorMessage(res);
+      .catch((errors) => {
+        if (typeof errors === "string") setErrorMessage([errors]);
+        else setErrorMessage(errors);
       });
   }
 

@@ -19,7 +19,7 @@ export const ajax = {
 
       if (addJWT) headers.authorization = `Bearer ${cookies.get("j")}`;
 
-      fetch(`/api/${endPoint}`, {
+      fetch(`https://localhost:7035/api/${endPoint}`, {
         method: "GET",
         headers: headers,
       }).then((response) => {
@@ -37,7 +37,7 @@ export const ajax = {
       if (contentType === "json") headers["Content-Type"] = "application/json";
       if (addJWT) headers.authorization = `Bearer ${cookies.get("j")}`;
 
-      return fetch(`/api/${endPoint}`, {
+      return fetch(`https://localhost:7035/api/${endPoint}`, {
         method: "POST",
         headers: headers,
         body: body,

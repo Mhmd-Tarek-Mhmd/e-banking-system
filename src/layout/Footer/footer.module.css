@@ -1,7 +1,6 @@
 /* Footer */
 .footer {
     padding: 20px 100px 10px;
-    position: fixed;
     width: 100%;
     bottom: 0;
     background-color: var(--clr-bg-footer);

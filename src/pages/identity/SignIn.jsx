@@ -26,7 +26,7 @@ export default function SignIn() {
         );
       })
       .catch((errors) => {
-        if (typeof res === "string") setErrorMessage([errors]);
+        if (typeof errors === "string") setErrorMessage([errors]);
         else setErrorMessage(errors);
       });
   }
