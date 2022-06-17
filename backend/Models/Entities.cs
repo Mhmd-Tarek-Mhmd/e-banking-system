@@ -34,8 +34,8 @@ namespace Backend.Models
         public long Amount { get; set; }
         public string TransactorId { get; set; }
         public Account Transactor { get; set; }
-        public string TransferredToId { get; set; }
-        public Account TransferredTo { get; set; }
+        public string? TransferredToId { get; set; }
+        public virtual Account TransferredTo { get; set; }
         public bool Approved { get; set; } = false;
         public DateTime Date { get; set; } = DateTime.UtcNow;
     }

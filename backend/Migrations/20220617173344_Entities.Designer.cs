@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220616203008_SeedData")]
-    partial class SeedData
+    [Migration("20220617173344_Entities")]
+    partial class Entities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,7 +73,6 @@ namespace Backend.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("TransferredToId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Type")
@@ -361,9 +360,7 @@ namespace Backend.Migrations
 
                     b.HasOne("Backend.Models.Account", "TransferredTo")
                         .WithMany()
-                        .HasForeignKey("TransferredToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TransferredToId");
 
                     b.Navigation("Transactor");
 

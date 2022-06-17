@@ -277,3 +277,12 @@ p {
   font-weight: 500;
   font-size: 2em;
 }
+
+.paging {
+  display: flex;
+  margin: 2em 2em 5em;
+}
+
+.pagingButton {
+  margin-right: 1em;
+}

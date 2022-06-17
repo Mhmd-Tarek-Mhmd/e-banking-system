@@ -11,7 +11,7 @@ export default function EditCustomerData({
   const [lastName, setLastName] = useState(customer.name.split(" ")[1]);
   const [Email, setEmail] = useState(customer.email);
   const [Phone, setPhone] = useState(customer.phone);
-  const [currentPassword, setCurrentPassword] = useState("")
+  const [currentPassword, setCurrentPassword] = useState("");
   const [Password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [address, setAddress] = useState(customer.address);
@@ -56,7 +56,10 @@ export default function EditCustomerData({
         });
         setActive("Settings");
       })
-      .catch((errors) => setErrorMessage(errors));
+      .catch((errors) => {
+        if (typeof errors === "string") setErrorMessage([errors]);
+        else setErrorMessage(errors);
+      });
   }
 
   return (

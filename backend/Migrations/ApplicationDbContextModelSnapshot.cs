@@ -71,7 +71,6 @@ namespace Backend.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("TransferredToId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Type")
@@ -359,9 +358,7 @@ namespace Backend.Migrations
 
                     b.HasOne("Backend.Models.Account", "TransferredTo")
                         .WithMany()
-                        .HasForeignKey("TransferredToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TransferredToId");
 
                     b.Navigation("Transactor");
 

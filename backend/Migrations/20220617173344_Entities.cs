@@ -192,7 +192,7 @@ namespace Backend.Migrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
                     TransactorId = table.Column<string>(type: "text", nullable: false),
-                    TransferredToId = table.Column<string>(type: "text", nullable: false),
+                    TransferredToId = table.Column<string>(type: "text", nullable: true),
                     Approved = table.Column<bool>(type: "boolean", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -209,8 +209,7 @@ namespace Backend.Migrations
                         name: "FK_Transactions_Accounts_TransferredToId",
                         column: x => x.TransferredToId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

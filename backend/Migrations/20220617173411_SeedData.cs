@@ -26,18 +26,16 @@ namespace Backend.Migrations
             migrationBuilder.InsertData(
                     table: "AspNetUsers",
                     columns: new[] {
-                    "Id", "Name", "Status", "Address", "City", "Country", "PostalCode", "CreationDate",
-                    "UserName", "NormalizedUserName",
-                    "Email", "NormalizedEmail", "EmailConfirmed",
+                    "Id", "Name", "Status", "Address", "City", "Country", "PostalCode", "CreationDate", "UserName",
+                    "NormalizedUserName","Email", "NormalizedEmail", "EmailConfirmed",
                     "PasswordHash",
                     "SecurityStamp", "ConcurrencyStamp",
                     "PhoneNumber", "PhoneNumberConfirmed",
                     "TwoFactorEnabled", "LockoutEnd","LockoutEnabled", "AccessFailedCount"
                     },
                     values: new object[] {
-                    admineUserId, "Admin", "Approved", "Heliopolis", "Cairo", "Egypt", "12345",
-                    DateTime.UtcNow,
-                    "admin@ebanking.com","ADMIN@EBANKING.COM","admin@ebanking.com","ADMIN@EBANKING.COM", true,
+                    admineUserId, "Admin", "Active", "Cairo", "Cairo", "Egypt", "12345", DateTime.UtcNow, "admin@ebanking.com",
+                    "ADMIN@EBANKING.COM","admin@ebanking.com","ADMIN@EBANKING.COM", true,
                     "AQAAAAEAACcQAAAAENDvDK8Ux+xOSqdrVgh7s5lXb5fC+ZUC1/pR4t15hVQI3Id7HegW0u608QAyDigVUA==",
                     "H4USNIM7DRSIPK2CTYHUCBOLTQUAQE5K", Guid.NewGuid().ToString(),
                     "01234567890", true, false, null, false, 0

@@ -12,6 +12,11 @@
         public string Country { get; set; }
         public string PostalCode { get; set; }
     }
+
+    public class ChangeCredentials : CredentialsRequest
+    {
+        public string CurrentPassword { get; set; }
+    }
     public class LoginRequest
     {
         public string Email { get; set; }

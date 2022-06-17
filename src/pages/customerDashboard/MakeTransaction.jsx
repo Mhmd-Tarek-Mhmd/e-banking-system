@@ -23,9 +23,9 @@ export default function MakeTransaction({ accounts }) {
         setFeedbackMessage([`Transaction is done with ID ${res}`]);
         e.currentTarget.reset();
       })
-      .catch((res) => {
-        if (typeof res !== "object") setFeedbackMessage([res]);
-        else setFeedbackMessage(res);
+      .catch((errors) => {
+        if (typeof errors === "string") setFeedbackMessage([errors]);
+        else setFeedbackMessage(errors);
       });
   }
 
