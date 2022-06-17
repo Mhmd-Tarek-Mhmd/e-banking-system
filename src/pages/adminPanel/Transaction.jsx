@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, Feed, Icon } from "semantic-ui-react";
 import { ajax } from "../../utilities/ajax";
+import admin from "./admin.module.scss";
 
 function Transaction() {
   const image = "https://react.semantic-ui.com/images/avatar/small/jenny.jpg";
@@ -8,6 +9,8 @@ function Transaction() {
   const [transactions, setTransactions] = useState([]);
   const [sourceTransactions, setSourceTransactions] = useState([]);
   const [didMount, setDidMount] = useState(false);
+
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     ajax.get("admin/getCompleteTransactionLog", true).then((data) => {
@@ -21,6 +24,15 @@ function Transaction() {
     if (e.target.value !== "")
       setTransactions(transactions.filter((t) => t.id === e.target.value));
     else setTransactions(sourceTransactions);
+  }
+
+  function incrementPage() {
+    if (page + 5 > transactions.length) setPage(0);
+    else setPage(page + 5);
+  }
+  function decrementPage() {
+    if (page - 5 < 0) setPage(0);
+    else setPage(page - 5);
   }
 
   return (
@@ -47,7 +59,14 @@ function Transaction() {
             onBlur={searchTransactions}
           />
 
-          {transactions.map((transaction) => (
+          <button
+            className={admin.flex}
+            onClick={() => setTransactions(sourceTransactions)}
+          >
+            Clear Filter
+          </button>
+
+          {transactions.slice(page, page + 5).map((transaction) => (
             <Feed
               key={transaction.id}
               style={{
@@ -95,6 +114,13 @@ function Transaction() {
               )}
             </Feed>
           ))}
+
+          <div className={admin.flex}>
+            <button className={admin.button} onClick={decrementPage}>
+              Previous
+            </button>
+            <button onClick={incrementPage}>Next</button>
+          </div>
         </>
       ) : (
         <div></div>

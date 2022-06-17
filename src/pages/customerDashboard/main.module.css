@@ -96,6 +96,10 @@
   display: inline-block;
 }
 
+.active {
+  width: 100%;
+}
+
 .active_account {
   font-size: 1.2em;
   margin-top: 15px;
@@ -255,4 +259,21 @@
 
 .accountsWrapper {
   margin-top: 1em;
+}
+
+.radio {
+  align-items: center;
+}
+.radio > * {
+  margin-bottom: 0;
+}
+
+.inactiveAccount {
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
+p {
+  font-weight: 500;
+  font-size: 2em;
 }

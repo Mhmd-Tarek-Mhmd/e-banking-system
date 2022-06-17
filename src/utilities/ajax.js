@@ -1,5 +1,15 @@
 import { cookies } from "./cookies";
 
+async function checkResponse(response) {
+  let text = await response.text();
+  try {
+    let json = JSON.parse(text);
+    return json;
+  } catch (error) {
+    return text;
+  }
+}
+
 export const ajax = {
   get: function get(endPoint, addJWT = false) {
     return new Promise(function (resolve, reject) {
@@ -13,15 +23,8 @@ export const ajax = {
         method: "GET",
         headers: headers,
       }).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => resolve(data));
-        } else {
-          if (response.status === 400)
-            response.json().then((res) => reject(res.errors[""]));
-          else {
-            response.json().then((errors) => reject(errors));
-          }
-        }
+        if (response.ok) checkResponse(response).then((res) => resolve(res));
+        else checkResponse(response).then((res) => reject(res));
       });
     });
   },
@@ -34,24 +37,13 @@ export const ajax = {
       if (contentType === "json") headers["Content-Type"] = "application/json";
       if (addJWT) headers.authorization = `Bearer ${cookies.get("j")}`;
 
-      fetch(`/api/${endPoint}`, {
+      return fetch(`/api/${endPoint}`, {
         method: "POST",
         headers: headers,
         body: body,
       }).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => resolve(data));
-        } else {
-          if (response.status === 400)
-            response.json().then((res) => reject(res.errors[""]));
-          else if (response.status === 406)
-            response.text().then((res) => reject(res));
-          else {
-            response.json().then((errors) => {
-              reject(errors);
-            });
-          }
-        }
+        if (response.ok) checkResponse(response).then((res) => resolve(res));
+        else checkResponse(response).then((res) => reject(res));
       });
     });
   },

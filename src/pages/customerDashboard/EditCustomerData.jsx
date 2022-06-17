@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import identity from "./identity.module.scss";
+import identity from "../identity/identity.module.scss";
 import { ajax } from "../../utilities/ajax";
-import { cookies } from "../../utilities/cookies";
-import { NavLink, useNavigate } from "react-router-dom";
 
-function Register() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Phone, setPhone] = useState("");
+export default function EditCustomerData({
+  customer,
+  setActive,
+  setCustomerData,
+}) {
+  const [firstName, setFirstName] = useState(customer.name.split(" ")[0]);
+  const [lastName, setLastName] = useState(customer.name.split(" ")[1]);
+  const [Email, setEmail] = useState(customer.email);
+  const [Phone, setPhone] = useState(customer.phone);
+  const [currentPassword, setCurrentPassword] = useState("")
   const [Password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const [address, setAddress] = useState(customer.address);
+  const [city, setCity] = useState(customer.city);
+  const [country, setCountry] = useState(customer.country);
+  const [postalCode, setPostalCode] = useState(customer.postal);
   const [errorMessage, setErrorMessage] = useState([""]);
 
-  const navigateTo = useNavigate();
-
-  function reg(e) {
+  function edit(e) {
     e.preventDefault();
 
     if (confirmPassword !== Password) {
@@ -32,6 +33,7 @@ function Register() {
     formdata.append("LastName", lastName);
     formdata.append("Email", Email);
     formdata.append("Phone", Phone);
+    formdata.append("currentPassword", currentPassword);
     formdata.append("Password", Password);
     formdata.append("address", address);
     formdata.append("city", city);
@@ -39,27 +41,30 @@ function Register() {
     formdata.append("postalCode", postalCode);
 
     ajax
-      .post("identity/register", "form", formdata)
-      .then((res) => {
+      .post("customer/editCustomerData", "form", formdata, true)
+      .then(() => {
         setErrorMessage([""]);
-
-        cookies.add("j", res.j, res.rememberMe ? 7 : null);
-        cookies.add("r", res.r, res.rememberMe ? 7 : null);
-
-        navigateTo(`${res.r === "a" ? "/adminPanel" : "/customerDashboard"}`);
+        setCustomerData({
+          ...customer,
+          name: `${firstName} ${lastName}`,
+          email: Email,
+          phone: Phone,
+          address: address,
+          city: city,
+          country: country,
+          postal: postalCode,
+        });
+        setActive("Settings");
       })
-      .catch((errors) => {
-        if (typeof errors !== "object") setErrorMessage([errors]);
-        else setErrorMessage(errors);
-      });
+      .catch((errors) => setErrorMessage(errors));
   }
 
   return (
     <>
       <div className={identity.sign}>
         <main className={identity.form}>
-          <form onSubmit={(e) => reg(e)} className={identity.formBody}>
-            <h1>Registration</h1>
+          <form onSubmit={(e) => edit(e)} className={identity.formBody}>
+            <h1>Edit Customer Data</h1>
             <div className={identity.input}>
               <div className={identity.inputItems}>
                 <div className={identity.inputItem}>
@@ -112,6 +117,21 @@ function Register() {
               </div>
               <div className={identity.inputItems}>
                 <div className={identity.inputItem}>
+                  <label htmlFor="currentPassword">Current Password</label>
+                  <input
+                    type="password"
+                    name="currentPassword"
+                    id="current-password"
+                    pattern="[0-9-a-z]{8,20}[A-Z]{1}[*-+-?-!]{1}"
+                    required
+                    minLength="8"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className={identity.inputItems}>
+                <div className={identity.inputItem}>
                   <label htmlFor="password">Password (8 characters)</label>
                   <input
                     type="password"
@@ -145,6 +165,7 @@ function Register() {
                     id="address"
                     required
                     minLength="3"
+                    value={address}
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
@@ -156,6 +177,7 @@ function Register() {
                     id="city"
                     required
                     minLength="3"
+                    value={city}
                     onChange={(e) => setCity(e.target.value)}
                   />
                 </div>
@@ -169,6 +191,7 @@ function Register() {
                     id="country"
                     required
                     minLength="3"
+                    value={country}
                     onChange={(e) => setCountry(e.target.value)}
                   />
                 </div>
@@ -180,6 +203,7 @@ function Register() {
                     id="postal-code"
                     required
                     minLength="5"
+                    value={postalCode}
                     onChange={(e) => setPostalCode(e.target.value)}
                   />
                 </div>
@@ -196,11 +220,8 @@ function Register() {
                 className={identity.btnSign}
                 type="submit"
               >
-                Sign Up
+                Submit
               </button>
-              <NavLink className={identity.newAccount} to="/signIn">
-                Have an Account?
-              </NavLink>
             </div>
           </form>
         </main>
@@ -208,4 +229,3 @@ function Register() {
     </>
   );
 }
-export default Register;

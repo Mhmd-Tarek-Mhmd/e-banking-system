@@ -26,7 +26,8 @@ export default function Pending({ type }) {
         JSON.stringify({
           id: id,
           status: decision,
-        })
+        }),
+        true
       )
       .then(() => {
         setPendingData(pendingData.filter((e) => e.id !== id));

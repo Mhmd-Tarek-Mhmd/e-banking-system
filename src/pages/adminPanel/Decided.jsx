@@ -24,7 +24,8 @@ export default function Decided({ type }) {
         JSON.stringify({
           id: dataId,
           status: decision,
-        })
+        }),
+        true
       )
       .then(() => {
         setData(

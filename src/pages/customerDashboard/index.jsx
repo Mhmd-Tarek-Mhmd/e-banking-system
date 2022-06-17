@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Icon } from "semantic-ui-react";
 import Home_Dash from "./Home";
-import Dash_user from "./My_Dashboard";
 import Sidebar from "./Sidebar";
 import Transaction from "./Transactions";
 import Settings from "./Settings";
-import Withdraw from "./Withdraw";
-import Recharge from "./Recharge";
+import CreateAccount from "./CreateAccount";
 import MainStyle from "./main.module.css";
 import { ajax } from "../../utilities/ajax";
+import EditCustomerData from "./EditCustomerData";
+import MakeTransaction from "./MakeTransaction";
 
-function UserDashboard() {
+export default function UserDashboard() {
   const [barActive, setBarActive] = useState(false);
   const [active, setActive] = useState("Home");
 
@@ -27,47 +27,95 @@ function UserDashboard() {
 
   //#endregion
 
-  return (
-    didMount && (
-      <>
-        <Menu stackable fixed="top">
-          <h3
-            style={{
-              marginTop: "10px",
-              marginLeft: "30px",
-              color: "white",
-              color: "black",
-            }}
-          >
-            Dashboard
-          </h3>
+  return didMount && customerData.status === "Active" ? (
+    <>
+      <Menu stackable fixed="top">
+        <h3
+          style={{
+            marginTop: "10px",
+            marginLeft: "30px",
+            color: "white",
+            color: "black",
+          }}
+        >
+          Dashboard
+        </h3>
 
-          <Menu.Item position="right">
-            <Icon
-              name="bars"
-              style={{ cursor: "pointer" }}
-              onClick={() => setBarActive(!barActive)}
-            ></Icon>
-          </Menu.Item>
-        </Menu>
+        <Menu.Item position="right">
+          <Icon
+            name="bars"
+            style={{ cursor: "pointer" }}
+            onClick={() => setBarActive(!barActive)}
+          ></Icon>
+        </Menu.Item>
+      </Menu>
 
-        <div className={MainStyle.flexContainer}>
-          {barActive === false && (
-            <Sidebar active={active} setActive={setActive} disable={false} />
+      <div className={MainStyle.flexContainer}>
+        {barActive === false && (
+          <Sidebar
+            customerName={customerData.name}
+            active={active}
+            setActive={setActive}
+            disable={false}
+          />
+        )}
+        {barActive === true && (
+          <Sidebar
+            customerName={customerData.name}
+            active={active}
+            setActive={setActive}
+            disable={true}
+          />
+        )}
+
+        <div className={MainStyle.active}>
+          {active === "Home" && (
+            <Home_Dash customer={customerData} setActive={setActive} />
           )}
-          {barActive === true && (
-            <Sidebar active={active} setActive={setActive} disable={true} />
+          {active === "Transactions" && (
+            <Transaction
+              customerName={customerData.name}
+              customerId={customerData.id}
+              accounts={customerData.accounts.map((account) => {
+                return {
+                  type: account.type,
+                  id: account.id,
+                };
+              })}
+            />
           )}
-          {active === "Home" && <Home_Dash customer={customerData} />}
-          {active === "My_Dashboard" && <Dash_user />}
-          {active === "Transactions" && <Transaction />}
-          {active === "Settings" && <Settings />}
-          {active === "Withdraw" && <Withdraw />}
-          {active === "Recharge" && <Recharge />}
+          {active === "Settings" && (
+            <Settings setActive={setActive} customer={customerData} />
+          )}
+          {active === "Make Transaction" && (
+            <MakeTransaction
+              setActive={setActive}
+              accounts={customerData.accounts.map((account) => account.id)}
+            />
+          )}
+          {active === "CreateAccount" && (
+            <CreateAccount
+              setActive={setActive}
+              customerData={customerData}
+              setCustomerData={setCustomerData}
+            />
+          )}{" "}
+          {active === "editCustomerData" && (
+            <EditCustomerData
+              customer={customerData}
+              setActive={setActive}
+              setCustomerData={setCustomerData}
+            />
+          )}
         </div>
-      </>
-    )
+      </div>
+    </>
+  ) : didMount && customerData.status !== "Active" ? (
+    <div className={MainStyle.inactiveAccount}>
+      <p>Your account is not active.</p>
+      <p>Kindly contact the admin</p>
+    </div>
+  ) : (
+    <div></div>
   );
 }
-
-export default UserDashboard;
